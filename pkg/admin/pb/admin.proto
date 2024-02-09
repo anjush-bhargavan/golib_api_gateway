@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+package pbA;
+
+option go_package = "./";
+
+service AdminService {
+    rpc AdminLogin(AdminRequest) returns (AdminResponse);
+
+    rpc FindUserByEmailFn(UserRequest) returns (User);
+    rpc FindUserByIDFn(AUserID) returns (User);
+    rpc FindAllUsersFn(AdminNoParam) returns (UserList);
+    rpc EditUserFn(UserModel) returns (AdminResponse);
+    rpc DeleteUserFn(AUserID) returns (AdminResponse);
+
+    rpc UserCreateBook(ABookModel) returns(AdminResponse) ;
+    rpc UserFetchBookByID(ABookID) returns(ABookModel);
+    rpc UserFetchBookByName(ABookName) returns (ABookModel);
+    rpc USerFetchAllBooks(AdminNoParam) returns (ABookList);
+}
+
+message AdminNoParam{}
+
+message User {
+    string firstname = 1;
+    string lastname = 2;
+    string username = 3;
+    string dob = 4;
+    string gender = 5;
+    string email = 6;
+    string phone = 7;
+    string address = 8;
+}
+
+message UserList {
+    repeated User users = 1;
+}
+
+message AdminResponse {
+    string status = 1;
+    string error = 2;
+    string message = 3;
+}
+
+message AdminRequest {
+    string username = 1;
+    string password = 2;
+    string role = 3;
+}
+
+message UserRequest {
+    string email = 1;
+}
+
+message AUserID {
+    uint32 id = 1;
+}
+
+message UserModel {
+    string firstname = 1;
+    string lastname = 2;
+    string dob = 3;
+    string gender = 4;
+    string email = 5;
+    string phone = 6;
+    string address = 7;
+    string password = 8;
+}
+
+
+
+message ABookModel {
+    string book_name = 1;
+    string author = 2;
+    uint32 no_of_copies = 3;
+    string year = 4;
+    string publications = 5;
+    string category = 6;
+    string description = 7; 
+}
+
+
+message ABookID {
+    uint32 id = 1;
+}
+
+message ABookName {
+    string name = 1;
+}
+
+message ABookList {
+    repeated ABookModel books = 1;
+}
+
+

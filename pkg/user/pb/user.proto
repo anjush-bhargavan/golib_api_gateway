@@ -1,0 +1,104 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "./";
+
+service UserService {
+    rpc UserLogin (LoginRequest) returns (CommonResponse);
+    rpc UserSignup (SignupRequest) returns (CommonResponse);
+    rpc UserProfile (UserID) returns (Profile);
+    rpc UserProfileUpdate(ProfileUpdate) returns (Profile);
+
+    rpc UserFetchBookByID(UBookID) returns(UBookModel);
+    rpc UserFetchBookByName(UBookName) returns (UBookModel);
+    rpc USerFetchAllBooks(UNoParam) returns (UBookList);
+
+    rpc CreateMembership(Membership) returns(CommonResponse);
+    rpc FindMembershipByID(UserID) returns(Membership);
+    rpc UpdateMembeship(Membership) returns(CommonResponse);
+
+}
+
+message LoginRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message CommonResponse {
+    string status = 1;
+    string error = 2;
+    string message = 3;
+}
+
+message SignupRequest {
+    string firstname = 1;
+    string lastname = 2;
+    string dob = 3;
+    string gender = 4;
+    string email = 5;
+    string phone = 6;
+    string address = 7;
+    string password = 8;
+}
+
+message UserID {
+    uint32 id = 1;
+}
+
+message Profile {
+    string firstname = 1;
+    string lastname = 2;
+    string username = 3;
+    string dob = 4;
+    string gender = 5;
+    string email = 6;
+    string phone = 7;
+    string address = 8;
+} 
+
+message ProfileUpdate {
+    uint32 userid = 1;
+    string firstname = 2;
+    string lastname = 3;
+    string username = 4;
+    string dob = 5;
+    string gender = 6;
+    string phone = 7;
+    string address = 8;
+}
+
+message UNoParam{}
+
+message UBookModel {
+    string book_name = 1;
+    string author = 2;
+    uint32 no_of_copies = 3;
+    string year = 4;
+    string publications = 5;
+    string category = 6;
+    string description = 7; 
+}
+
+
+message UBookID {
+    uint32 id = 1;
+}
+
+message UBookName {
+    string name = 1;
+}
+
+message UBookList {
+    repeated UBookModel books = 1;
+}
+
+
+message Membership {
+    uint32 user_id = 1;
+    string subscription_id = 2;
+    string plan = 3;
+    bool is_active = 4;
+    string started_on = 5;
+    string expires_at = 6;
+}
